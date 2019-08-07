@@ -1,0 +1,765 @@
+<html>
+
+<head>
+    <style id="react-native-stylesheet"></style>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,minimum-scale=1,user-scalable=yes" name="viewport">
+    <title>TweetDyn</title>
+    <meta content="TweetDeck" name="application-name">
+    <meta content="TweetDeck is your personal browser for staying in touch with what’s happening now." name="description">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+
+    <script src="//www.google-analytics.com/analytics.js" async=""></script>
+    <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="script/tribute.min.js"></script>
+
+    <link href="style/style.css" rel="stylesheet" />
+    <link href="style/recommended-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style/tribute.css" />
+
+    <script src="script/vendor.js"></script>
+    <script src="script/bundle.js"></script>
+
+    <body class="is-medium-columns"><audio id="update-sound" preload="auto" style="display:none">
+        <source src="https://ton.twimg.com/tweetdeck-web/web/assets/sounds/tweet.a0da953980.mp3" type="audio/mp3">
+        <source src="https://ton.twimg.com/tweetdeck-web/web/assets/sounds/tweet.8c519d390a.ogg" type="audio/ogg">
+        </audio>
+        <div class="js-app-loading login-container" style="display: none;"></div>
+        <div class="is-hidden js-message-banner message-banner"></div>
+        <div class="application js-app">
+            <header class="js-app-header pin-all app-header">
+                <div class="js-app-header-inner pin-v app-header-inner">
+
+                    <!-- wrap close button as it has different padding -->
+                    <div class="js-compose-controls attach-compose-buttons"></div>
+                    <div class="overlay is-hidden"></div>
+
+                </div>
+                <div class="js-column-nav-scroller column-navigator antiscroll-wrap">
+                    <nav id="column-navigator" class="js-column-nav scroll-v antiscroll-inner" style="right: 0px; bottom: 0px;">
+                        <div class="js-column-nav-list">
+                            <ul class="js-int-scroller">
+
+                                <li class="js-column-nav-menu-item column-nav-item" data-column="c1565002728626s64" data-customtimeline-id="" data-customtimeline-account=""> <i class="icon icon-xsmall icon-dot column-nav-updates"></i>
+                                    <a class="js-header-action js-drag-handle drag-handle link-clean cf padding-h--16 column-nav-link txt-size--14" data-action="jumpto" data-column="c1565002728626s64">
+                                        <div class="obj-left"> <i class="icon icon-home icon-medium position-rel" data-action="drag"> </i> </div>
+                                        <div class="js-column-title nbfc hide-condensed">
+                                            <span class="column-heading">Home</span>
+                                            <span class="attribution txt-mute txt-sub-antialiased txt-ellipsis vertical-align--baseline">@Atili0</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+        </div>
+
+        <div class="js-progress-indicator"></div>
+        <div class="js-app-content app-content">
+            <div class="js-drawer drawer wide" data-drawer="compose"></div>
+            <div class="js-drawer drawer wide" data-drawer="accountSettings">
+                <div class="js-accounts-column-holder column-holder txt-size--14">
+                    <div class="js-account-manager-container column-panel accounts-drawer border-box flex flex-column">
+                        <header class="drawer-header padding-lxl flex-shrink--0">
+                            <h1 class="column-title">
+                                <span class="drawer-header-title block drawer-column-header-title">Accounts</span>
+                            </h1>
+                            <a class="js-drawer-close column-close-link color-twitter-darker-gray" href="#" data-action="options">
+                                <i class="icon icon-close icon-center-24"></i>
+                            </a>
+                        </header>
+
+                    </div>
+                    <div class="js-contributor-manager-container column-panel border-box bg-color-twitter-lightest-gray flex flex-column">
+                    </div>
+                </div>
+            </div>
+            <div class="js-app-columns-container app-columns-container scroll-h needs-scroll-bottom-offset scroll-styled-h" id="container">
+                <div class="js-app-columns app-columns horizontal-flow-container without-tweet-drag-handles">
+                    <section data-column="c1565002728626s64" class="js-column column will-animate">
+                        <div class="js-column-holder column-holder">
+                            <div class="column-panel flex flex-column height-p--100">
+                                <header class="js-column-header js-action-header flex-shrink--0 column-header " data-action="resetToTopColumn"> <i class="js-column-drag-handle is-movable column-drag-handle pull-left sprite sprite-drag-vertical"></i>
+                                    <i class="pull-left margin-l--10 margin-r--2 column-type-icon icon icon-home"> </i>
+                                    <span class="column-number"></span>
+                                    <div class="column-title flex flex-justify-content--space-between">
+                                        <div class="column-header-title flex flex-align--center flex-wrap--wrap flex-grow--2">
+                                            <span class="column-heading">Tweet</span> <span class="attribution txt-mute txt-sub-antialiased txt-ellipsis vertical-align--baseline">Open</span>
+                                        </div>
+                                        <!-- CAMBIAR ICONO DE CASOS-->
+                                        <div class="column-header-links">
+                                            <a data-testid="optionsToggle" class="js-action-header-button column-header-link column-settings-link" href="#" data-action="options">
+                                                <i class="icon icon-compose-ticket"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="js-column-content column-content flex-auto position-rel flex flex-column height-p--100">
+                                    <div class="js-column-options-container column-options flex-shrink--0 z-index--2">
+                                        <div class="js-column-options "></div>
+                                        <div class="js-customtimeline-description scroll-none with-column-divider-bottom is-hidden">
+                                        </div>
+                                    </div>
+                                    <div class="js-insights-entry-point"></div>
+                                    <div>
+                                        <div class="js-column-message scroll-none"></div>
+                                    </div>
+                                    <div class="js-live-video"></div>
+                                    <div class="js-column-scroller js-dropdown-container column-scroller position-rel scroll-v flex-auto height-p--100 scroll-styled-v ">
+                                        <div class="js-chirp-container chirp-container" data-column="c1565002728626s61">
+                                            <!-- AGREGAR TEXTBOX PARA TWEET-->
+
+
+                                            <textarea id="testarea" class="form-control" placeholder="Enter some text here" rows="10"></textarea>
+
+
+                                            <script type="text/javascript">
+                                                var tribute = new Tribute({
+                                                    values: [{
+                                                        key: 'Jordan Humphreys',
+                                                        value: 'Jordan Humphreys',
+                                                        email: 'getstarted@zurb.com'
+                                                    }, {
+                                                        key: 'Sir Walter Riley',
+                                                        value: 'Sir Walter Riley',
+                                                        email: 'getstarted+riley@zurb.com'
+                                                    }, {
+                                                        key: 'atilio rosas',
+                                                        value: 'Sir Walter Riley',
+                                                        email: 'getstarted+riley@zurb.com'
+                                                    }],
+                                                });
+
+
+                                                tribute.attach(document.getElementById('testarea'));
+                                            </script>
+
+                                        </div>
+
+                                        <!-- Style by file attach-->
+                                        <style>
+                                            .image-upload>input {
+                                                display: none;
+                                            }
+                                            
+                                            .image-upload img {
+                                                width: 30px;
+                                                cursor: pointer;
+                                            }
+                                        </style>
+
+                                        <footer class="tweet-footer cf">
+                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply">
+
+                                                        <div class="image-upload">
+                                                            <label for="file-input">
+                                                                    <img src="https://img.icons8.com/material-two-tone/50/000000/attach.png"/>
+                                                                </label>
+
+                                                            <input id="file-input" type="file" />
+                                                        </div>
+
+                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                        <span class="is-vishidden">Reply</span>
+                                                        <span class="reply-triangle"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </footer>
+
+
+                                    </div>
+                                    <div class="js-column-drag-drop-overlay column-drag-drop-overlay drag-drop-indicator pin-all">
+                                        <div class="l-table column-drag-drop-overlay-inner drag-drop-indicator">
+                                            <div class="l-cell js-drag-drop-overlay-text"> Add here </div>
+                                            <div class="l-cell js-drag-drop-overlay-spinner is-hidden">
+                                                <div class="spinner-small spinner-small-blue-bg spinner-centered-auto">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="js-more-tweets-btn-container more-tweets-btn-container pin-top-full-width more-tweets-btn-container--hidden">
+                                        <div class="js-more-tweets-glow more-tweets-glow obj-center"></div>
+                                        <button class="js-more-tweets-btn Button--primary more-tweets-btn txt-size--12 is-hidden">
+                                                    <div class="more-tweets-btn-inner-default"> <i
+                                                            class="icon icon-pointer-u icon-match-context icon-tt"></i> <span
+                                                            class="js-more-tweets-btn-text"></span> </div>
+                                                    <div class="more-tweets-btn-inner-mouse-release"> Release to refresh </div>
+                                                    <div class="more-tweets-btn-inner-loading">Loading...</div>
+                                    </button>
+                                    </div>
+                                </div>
+                                <div class="js-add-to-customtimeline add-by-url padding-hm is-hidden flex-shrink--0">
+                                </div>
+                            </div>
+                            <div class="js-column-detail column-detail column-panel flex flex-column height-p--100">
+                            </div>
+                            <div class="js-column-social-proof column-detail-level-2 column-panel flex flex-column height-p--100">
+                            </div>
+                        </div>
+                    </section>
+                    <section data-column="c1565002728626s61" class="js-column column will-animate">
+                        <div class="js-column-holder column-holder">
+                            <div class="column-panel flex flex-column height-p--100">
+                                <header class="js-column-header js-action-header flex-shrink--0 column-header " data-action="resetToTopColumn"> <i class="js-column-drag-handle is-movable column-drag-handle pull-left sprite sprite-drag-vertical"></i>
+                                    <i class="pull-left margin-l--10 margin-r--2 column-type-icon icon icon-home"> </i>
+                                    <span class="column-number"></span>
+                                    <div class="column-title flex flex-justify-content--space-between">
+                                        <div class="column-header-title flex flex-align--center flex-wrap--wrap flex-grow--2">
+                                            <span class="column-heading">Cases</span> <span class="attribution txt-mute txt-sub-antialiased txt-ellipsis vertical-align--baseline">Open</span>
+                                        </div>
+                                        <!-- CAMBIAR ICONO DE CASOS-->
+                                        <div class="column-header-links">
+                                            <a data-testid="optionsToggle" class="js-action-header-button column-header-link column-settings-link" href="#" data-action="options">
+                                                <i class="icon icon-compose-ticket"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="js-column-content column-content flex-auto position-rel flex flex-column height-p--100">
+                                    <div class="js-column-options-container column-options flex-shrink--0 z-index--2">
+                                        <div class="js-column-options "></div>
+                                        <div class="js-customtimeline-description scroll-none with-column-divider-bottom is-hidden">
+                                        </div>
+                                    </div>
+                                    <div class="js-insights-entry-point"></div>
+                                    <div>
+                                        <div class="js-column-message scroll-none"></div>
+                                    </div>
+                                    <div class="js-live-video"></div>
+                                    <div class="js-column-scroller js-dropdown-container column-scroller position-rel scroll-v flex-auto height-p--100 scroll-styled-v ">
+                                        <div class="js-chirp-container chirp-container" data-column="c1565002728626s61" style="">
+                                            <article class="stream-item js-stream-item  is-draggable  is-actionable " data-key="1158340881298153472" data-account-key="twitter:1022461558201503745" data-drag-type="tweet" data-tweet-id="1158340881298153472" style="">
+                                                <div class="js-stream-item-content item-box js-show-detail ">
+                                                    <div class="js-tweet tweet        ">
+                                                        <header class="tweet-header js-tweet-header flex flex-row flex-align--baseline">
+                                                            <a class="account-link link-complex block flex-auto" href="https://twitter.com/JoelLindstrom" rel="user" target="_blank">
+                                                                <div class="obj-left item-img tweet-img position-rel">
+                                                                    <img class="tweet-avatar avatar pin-top-full-width" src="https://pbs.twimg.com/profile_images/1056301508004888576/j-z6lGF7_normal.jpg" alt="JoelLindstrom's avatar"> </div>
+                                                                <div class="nbfc "> <span class="account-inline txt-ellipsis"> <b
+                                                                            class="fullname link-complex-target">Power
+                                                                            Platform Joel</b> <span
+                                                                            class="username txt-mute">@JoelLindstrom</span>
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                            <time class="tweet-timestamp js-timestamp txt-mute flex-shrink--0" datetime="2019-08-05T11:36:01.000Z" data-time="1565004961000">
+                                                            <a class="txt-size-variable--12 no-wrap"
+                                                                    href="https://twitter.com/JoelLindstrom/status/1158340881298153472"
+                                                                    rel="url" target="_blank">now</a>
+                                                        </time>
+                                                        </header>
+                                                        <div class="tweet-body js-tweet-body">
+                                                            <div class="nbfc txt-size-variable--12 txt-ellipsis"> </div>
+                                                            <p class="js-tweet-text tweet-text with-linebreaks " lang="en">Hey look, a tip of the day from <a href="https://twitter.com/BenVollmer/" rel="user" data-user-name="BenVollmer" class="link-complex" target="_blank"><span>@</span><span
+                                                                        class="link-complex-target">BenVollmer</span></a>
+                                                                <a href="https://t.co/qqCJXzd4pR" target="_blank" class="url-ext" data-full-url="https://buff.ly/2KhMjLl" rel="url noopener noreferrer">buff.ly/2KhMjLl</a>
+                                                            </p>
+                                                            <div class="js-card-container"></div>
+                                                            <div class="js-media media-preview   position-rel" data-key="1158340881298153472">
+                                                                <div class=" js-media-preview-container media-preview-container position-rel width-p--100 margin-vm       is-paused  ">
+                                                                    <a class="js-media-image-link block med-link media-item media-size-medium   is-zoomable" href="https://t.co/06m9sgSkSK" rel="mediaPreview" target="_blank" style="background-image:url(https://pbs.twimg.com/media/EBNA5KRWkAAYTCi.jpg?format=jpg&amp;name=360x360)"
+                                                                        data-media-entity-id="1158340879918206976" title=""> </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <footer class="tweet-footer cf">
+                                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply"> <i class="icon icon-reply txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                                        <span class="is-vishidden">Reply</span> <span class="reply-triangle"></span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10 ">
+                                                                    <a class="tweet-action " href="#" rel="retweet"> <i class="js-icon-retweet icon icon-retweet icon-retweet-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-retweet-toggle margin-l--3 margin-t--1 txt-size--12 js-retweet-count retweet-count"></span>
+                                                                        <span class="is-vishidden">Retweet</span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-show-tip tweet-action position-rel" href="#" rel="favorite" title="  Like from DynamicsMr   "> <i class="js-icon-favorite icon icon-favorite icon-favorite-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-favorite-toggle margin-l--2 margin-t--1 txt-size--12 js-like-count like-count"></span>
+                                                                        <span class="is-vishidden"> Like </span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item position-rel pull-left margin-r--10">
+                                                                    <a class="tweet-action" href="#" rel="actionsMenu" data-user-id="16115657" data-chirp-id="1158340881298153472" data-account-key="twitter:1022461558201503745" data-actions-menu-position="" data-parent-chirp-id=""> <i class="icon icon-more txt-right"></i> <span class="is-vishidden">More options</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="feature-customtimelines tweet-drag-handle tweet-action-item pull-right margin-l--7">
+                                                                    <span class="tweet-action" href="https://twitter.com/JoelLindstrom/status/1158340881298153472">
+                                                                        <i
+                                                                            class="icon icon-move txt-right txt-right"></i>
+                                                                        <span class="is-vishidden">Drag to
+                                                                            Collection</span> </span>
+                                                                </li>
+                                                            </ul>
+                                                        </footer>
+                                                        <div class="js-show-this-thread"> </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <article class="stream-item js-stream-item  is-draggable  is-actionable " data-key="1158338393706655745" data-account-key="twitter:1022461558201503745" data-drag-type="tweet" data-tweet-id="1158338393706655745" style="">
+                                                <div class="js-stream-item-content item-box js-show-detail ">
+                                                    <div class="js-tweet tweet        ">
+                                                        <header class="tweet-header js-tweet-header flex flex-row flex-align--baseline">
+                                                            <a class="account-link link-complex block flex-auto" href="https://twitter.com/edwardsdna" rel="user" target="_blank">
+                                                                <div class="obj-left item-img tweet-img position-rel">
+                                                                    <img class="tweet-avatar avatar pin-top-full-width" src="https://pbs.twimg.com/profile_images/1110911044862574592/4qQbBS_e_normal.png" alt="edwardsdna's avatar"> </div>
+                                                                <div class="nbfc "> <span class="account-inline txt-ellipsis"> <b
+                                                                            class="fullname link-complex-target">Donna
+                                                                            Edwards</b> <span
+                                                                            class="username txt-mute">@edwardsdna</span>
+                                                                    </span>
+                                                                </div>
+                                                            </a> <time class="tweet-timestamp js-timestamp txt-mute flex-shrink--0" datetime="2019-08-05T11:26:08.000Z" data-time="1565004368000"> <a
+                                                                    class="txt-size-variable--12 no-wrap"
+                                                                    href="https://twitter.com/edwardsdna/status/1158338393706655745"
+                                                                    rel="url" target="_blank">9m</a> </time> </header>
+                                                        <div class="tweet-body js-tweet-body">
+                                                            <div class="nbfc txt-size-variable--12 txt-ellipsis"> </div>
+                                                            <p class="js-tweet-text tweet-text with-linebreaks " lang="en">How to create Business Central Online Sandbox with API. AAD Authentication <a href="https://t.co/pGZ5sx7Z68" target="_blank" class="url-ext" data-full-url="https://community.dynamics.com/nav/b/katsonsnavblog/posts/business-central-aad-authentication-api?utm_source=dlvr.it&amp;utm_medium=twitter"
+                                                                    rel="url noopener noreferrer" title="https://community.dynamics.com/nav/b/katsonsnavblog/posts/business-central-aad-authentication-api?utm_source=dlvr.it&amp;utm_medium=twitter">community.dynamics.com/nav/b/katsonsn…</a>
+                                                                <a href="https://twitter.com/MSFTDynamics365/" rel="user" data-user-name="MSFTDynamics365" class="link-complex" target="_blank"><span>@</span><span
+                                                                        class="link-complex-target">MSFTDynamics365</span></a>
+                                                            </p>
+                                                            <div class="js-card-container"></div>
+                                                        </div>
+                                                        <footer class="tweet-footer cf">
+                                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply"> <i class="icon icon-reply txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                                        <span class="is-vishidden">Reply</span> <span class="reply-triangle"></span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10 ">
+                                                                    <a class="tweet-action " href="#" rel="retweet"> <i class="js-icon-retweet icon icon-retweet icon-retweet-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-retweet-toggle margin-l--3 margin-t--1 txt-size--12 js-retweet-count retweet-count"></span>
+                                                                        <span class="is-vishidden">Retweet</span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-show-tip tweet-action position-rel" href="#" rel="favorite" title="  Like from DynamicsMr   "> <i class="js-icon-favorite icon icon-favorite icon-favorite-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-favorite-toggle margin-l--2 margin-t--1 txt-size--12 js-like-count like-count"></span>
+                                                                        <span class="is-vishidden"> Like </span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item position-rel pull-left margin-r--10">
+                                                                    <a class="tweet-action" href="#" rel="actionsMenu" data-user-id="18049540" data-chirp-id="1158338393706655745" data-account-key="twitter:1022461558201503745" data-actions-menu-position="" data-parent-chirp-id=""> <i class="icon icon-more txt-right"></i> <span class="is-vishidden">More options</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="feature-customtimelines tweet-drag-handle tweet-action-item pull-right margin-l--7">
+                                                                    <span class="tweet-action" href="https://twitter.com/edwardsdna/status/1158338393706655745">
+                                                                        <i
+                                                                            class="icon icon-move txt-right txt-right"></i>
+                                                                        <span class="is-vishidden">Drag to
+                                                                            Collection</span> </span>
+                                                                </li>
+                                                            </ul>
+                                                        </footer>
+                                                        <div class="js-show-this-thread"> </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <article class="stream-item js-stream-item  is-draggable  is-actionable " data-key="1158337251815956480" data-account-key="twitter:1022461558201503745" data-drag-type="tweet" data-tweet-id="1158337251815956480" style="">
+                                                <div class="js-stream-item-content item-box js-show-detail ">
+                                                    <div class="js-tweet tweet     is-quote-tweet   ">
+                                                        <header class="tweet-header js-tweet-header flex flex-row flex-align--baseline">
+                                                            <a class="account-link link-complex block flex-auto" href="https://twitter.com/JoelLindstrom" rel="user" target="_blank">
+                                                                <div class="obj-left item-img tweet-img position-rel">
+                                                                    <img class="tweet-avatar avatar pin-top-full-width" src="https://pbs.twimg.com/profile_images/1056301508004888576/j-z6lGF7_normal.jpg" alt="JoelLindstrom's avatar"> </div>
+                                                                <div class="nbfc "> <span class="account-inline txt-ellipsis"> <b
+                                                                            class="fullname link-complex-target">Power
+                                                                            Platform Joel</b> <span
+                                                                            class="username txt-mute">@JoelLindstrom</span>
+                                                                    </span>
+                                                                </div>
+                                                            </a> <time class="tweet-timestamp js-timestamp txt-mute flex-shrink--0" datetime="2019-08-05T11:21:36.000Z" data-time="1565004096000"> <a
+                                                                    class="txt-size-variable--12 no-wrap"
+                                                                    href="https://twitter.com/JoelLindstrom/status/1158337251815956480"
+                                                                    rel="url" target="_blank">14m</a> </time> </header>
+                                                        <div class="tweet-body js-tweet-body">
+                                                            <div class="nbfc txt-size-variable--12 txt-ellipsis"> </div>
+                                                            <p class="js-tweet-text tweet-text with-linebreaks " lang="en">You can go to the <a href="https://twitter.com/search?q=%23PowerPlatform" rel="hashtag" target="_blank" class="link-complex"><span
+                                                                        class="hash">#</span><span
+                                                                        class="link-complex-target">PowerPlatform</span></a> Admin Center and turn on the 2019 wave 2 release in your environments today. Start scanning those business cards and changing
+                                                                the opportunity close dialog!</p>
+                                                            <div class="js-card-container"></div>
+                                                            <div class="js-quote-detail quoted-tweet nbfc br--14 padding-al margin-b--8 position-rel margin-tm is-actionable " data-tweet-id="1158336885762220032" data-key="1158336885762220032" data-account-key="twitter:1022461558201503745" rel="viewDetails">
+                                                                <div>
+                                                                    <header class="tweet-header">
+                                                                        <a class="account-link link-complex inline flex-auto" href="https://twitter.com/crmaudio" rel="user" target="_blank">
+                                                                            <div class="obj-left item-img tweet-img position-rel">
+                                                                            </div>
+                                                                            <div class="nbfc inline"> <span class="account-inline txt-ellipsis">
+                                                                                    <b
+                                                                                        class="fullname link-complex-target">CRMAudio,
+                                                                                        the Dynamics 365 Podcast</b>
+                                                                                    <span
+                                                                                        class="username txt-mute">@crmaudio</span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </a>
+                                                                    </header>
+                                                                    <div class="js-reply-info-container">
+                                                                        <div class="nbfc txt-ellipsis txt-mute"> </div>
+                                                                    </div>
+                                                                    <p class="js-quoted-tweet-text with-linebreaks">2019 Wave 2 for <a href="https://twitter.com/search?q=%23MSDYN365" rel="hashtag" target="_blank" class="link-complex"><span
+                                                                                class="hash">#</span><span
+                                                                                class="link-complex-target">MSDYN365</span></a> and <a href="https://twitter.com/search?q=%23PowerPlatform" rel="hashtag" target="_blank" class="link-complex"><span
+                                                                                class="hash">#</span><span
+                                                                                class="link-complex-target">PowerPlatform</span></a> opt-in is available now. Also we congratulate the latest <a href="https://twitter.com/search?q=%23Bizapps" rel="hashtag"
+                                                                            target="_blank" class="link-complex"><span
+                                                                                class="hash">#</span><span
+                                                                                class="link-complex-target">Bizapps</span></a> MVP <a href="https://twitter.com/bcohen26/" rel="user" data-user-name="bcohen26" class="link-complex" target="_blank"><span>@</span><span
+                                                                                class="link-complex-target">bcohen26</span></a> and talk about how you can save a bunch of time copying and pasting in <a href="https://twitter.com/MicrosoftFlow/" rel="user"
+                                                                            data-user-name="MicrosoftFlow" class="link-complex" target="_blank"><span>@</span><span
+                                                                                class="link-complex-target">MicrosoftFlow</span></a> and <a href="https://twitter.com/PowerApps/" rel="user" data-user-name="PowerApps" class="link-complex" target="_blank"><span>@</span><span
+                                                                                class="link-complex-target">PowerApps</span></a>. Thanks <a href="https://twitter.com/mscrmaddons/" rel="user" data-user-name="mscrmaddons" class="link-complex" target="_blank"><span>@</span><span
+                                                                                class="link-complex-target">mscrmaddons</span></a>
+                                                                        <a href="https://t.co/Qc0UmEqsEI" target="_blank" class="url-ext" data-full-url="https://crm.audio/ppdb-get-power-platform-2019-wave-2-today/" rel="url noopener noreferrer" title="https://crm.audio/ppdb-get-power-platform-2019-wave-2-today/">crm.audio/ppdb-get-power…</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <footer class="tweet-footer cf">
+                                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply"> <i class="icon icon-reply txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                                        <span class="is-vishidden">Reply</span> <span class="reply-triangle"></span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10 ">
+                                                                    <a class="tweet-action " href="#" rel="retweet"> <i class="js-icon-retweet icon icon-retweet icon-retweet-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-retweet-toggle margin-l--3 margin-t--1 txt-size--12 js-retweet-count retweet-count"></span>
+                                                                        <span class="is-vishidden">Retweet</span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-show-tip tweet-action position-rel" href="#" rel="favorite" title="  Like from DynamicsMr   "> <i class="js-icon-favorite icon icon-favorite icon-favorite-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-favorite-toggle margin-l--2 margin-t--1 txt-size--12 js-like-count like-count"></span>
+                                                                        <span class="is-vishidden"> Like </span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item position-rel pull-left margin-r--10">
+                                                                    <a class="tweet-action" href="#" rel="actionsMenu" data-user-id="16115657" data-chirp-id="1158337251815956480" data-account-key="twitter:1022461558201503745" data-actions-menu-position="" data-parent-chirp-id=""> <i class="icon icon-more txt-right"></i> <span class="is-vishidden">More options</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="feature-customtimelines tweet-drag-handle tweet-action-item pull-right margin-l--7">
+                                                                    <span class="tweet-action" href="https://twitter.com/JoelLindstrom/status/1158337251815956480">
+                                                                        <i
+                                                                            class="icon icon-move txt-right txt-right"></i>
+                                                                        <span class="is-vishidden">Drag to
+                                                                            Collection</span> </span>
+                                                                </li>
+                                                            </ul>
+                                                        </footer>
+                                                        <div class="js-show-this-thread"> </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                    </div>
+                                    <div class="js-column-drag-drop-overlay column-drag-drop-overlay drag-drop-indicator pin-all">
+                                        <div class="l-table column-drag-drop-overlay-inner drag-drop-indicator">
+                                            <div class="l-cell js-drag-drop-overlay-text"> Add here </div>
+                                            <div class="l-cell js-drag-drop-overlay-spinner is-hidden">
+                                                <div class="spinner-small spinner-small-blue-bg spinner-centered-auto">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="js-more-tweets-btn-container more-tweets-btn-container pin-top-full-width more-tweets-btn-container--hidden">
+                                        <div class="js-more-tweets-glow more-tweets-glow obj-center"></div>
+                                        <button class="js-more-tweets-btn Button--primary more-tweets-btn txt-size--12 is-hidden">
+                                            <div class="more-tweets-btn-inner-default"> <i
+                                                    class="icon icon-pointer-u icon-match-context icon-tt"></i> <span
+                                                    class="js-more-tweets-btn-text"></span> </div>
+                                            <div class="more-tweets-btn-inner-mouse-release"> Release to refresh </div>
+                                            <div class="more-tweets-btn-inner-loading">Loading...</div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="js-add-to-customtimeline add-by-url padding-hm is-hidden flex-shrink--0">
+                                </div>
+                            </div>
+                            <div class="js-column-detail column-detail column-panel flex flex-column height-p--100">
+                            </div>
+                            <div class="js-column-social-proof column-detail-level-2 column-panel flex flex-column height-p--100">
+                            </div>
+                        </div>
+                    </section>
+                    <section data-column="c1565002728626s64" class="js-column column will-animate">
+                        <div class="js-column-holder column-holder">
+                            <div class="column-panel flex flex-column height-p--100">
+                                <header class="js-column-header js-action-header flex-shrink--0 column-header " data-action="resetToTopColumn"> <i class="js-column-drag-handle is-movable column-drag-handle pull-left sprite sprite-drag-vertical"></i>
+                                    <i class="pull-left margin-l--10 margin-r--2 column-type-icon icon icon-home"> </i>
+                                    <span class="column-number"></span>
+                                    <div class="column-title flex flex-justify-content--space-between">
+                                        <div class="column-header-title flex flex-align--center flex-wrap--wrap flex-grow--2">
+                                            <span class="column-heading">Cases</span> <span class="attribution txt-mute txt-sub-antialiased txt-ellipsis vertical-align--baseline">Closed </span>
+                                        </div>
+                                        <div class="column-header-links">
+                                            <a data-testid="optionsToggle" class="js-action-header-button column-header-link column-settings-link" href="#" data-action="options"> <i class="icon icon-sliders"></i> </a>
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="js-column-content column-content flex-auto position-rel flex flex-column height-p--100">
+                                    <div class="js-column-options-container column-options flex-shrink--0 z-index--2">
+                                        <div class="js-column-options "></div>
+                                        <div class="js-customtimeline-description scroll-none with-column-divider-bottom is-hidden">
+                                        </div>
+                                    </div>
+                                    <div class="js-insights-entry-point"></div>
+                                    <div>
+                                        <div class="js-column-message scroll-none"></div>
+                                    </div>
+                                    <div class="js-live-video"></div>
+                                    <div class="js-column-scroller js-dropdown-container column-scroller position-rel scroll-v flex-auto height-p--100 scroll-styled-v ">
+                                        <div class="js-chirp-container chirp-container" data-column="c1565002728626s64" style="">
+                                            <article class="stream-item js-stream-item  is-draggable  is-actionable " data-key="1158340898360573952" data-account-key="twitter:36910599" data-drag-type="tweet" data-tweet-id="1158340898360573952" style="">
+                                                <div class="js-stream-item-content item-box js-show-detail ">
+                                                    <div class="js-tweet tweet        ">
+                                                        <header class="tweet-header js-tweet-header flex flex-row flex-align--baseline">
+                                                            <a class="account-link link-complex block flex-auto" href="https://twitter.com/eljueves" rel="user" target="_blank">
+                                                                <div class="obj-left item-img tweet-img position-rel">
+                                                                    <img class="tweet-avatar avatar pin-top-full-width" src="https://pbs.twimg.com/profile_images/378800000384529554/ce1c0f07805fb6c778364d8ad578a349_normal.png" alt="eljueves's avatar">                                                                    </div>
+                                                                <div class="nbfc "> <span class="account-inline txt-ellipsis"> <b
+                                                                            class="fullname link-complex-target">El
+                                                                            Jueves</b> <i
+                                                                            class="js-show-tip sprite sprite-verified-mini"
+                                                                            title="Verified account"></i> <span
+                                                                            class="username txt-mute">@eljueves</span>
+                                                                    </span>
+                                                                </div>
+                                                            </a> <time class="tweet-timestamp js-timestamp txt-mute flex-shrink--0" datetime="2019-08-05T11:36:05.000Z" data-time="1565004965000"> <a
+                                                                    class="txt-size-variable--12 no-wrap"
+                                                                    href="https://twitter.com/eljueves/status/1158340898360573952"
+                                                                    rel="url" target="_blank">10s</a> </time> </header>
+                                                        <div class="tweet-body js-tweet-body">
+                                                            <div class="nbfc txt-size-variable--12 txt-ellipsis"> </div>
+                                                            <p class="js-tweet-text tweet-text with-linebreaks " lang="es">SE ESTÁ HABLANDO I Felipe VI interrumpe sus vacaciones durante un minuto para salvar España.
+
+                                                                <a href="https://t.co/iCRo0tGuob" target="_blank" class="url-ext" data-full-url="https://www.eljueves.es/se-esta-hablando/se-esta-hablando-i-felipe-vi-interrumpe-sus-vacaciones-durante-minuto-para-salvar-espana_3566?utm_source=twitter&amp;utm_medium=social&amp;utm_campaign=trafico"
+                                                                    rel="url noopener noreferrer" title="https://www.eljueves.es/se-esta-hablando/se-esta-hablando-i-felipe-vi-interrumpe-sus-vacaciones-durante-minuto-para-salvar-espana_3566?utm_source=twitter&amp;utm_medium=social&amp;utm_campaign=trafico">eljueves.es/se-esta-hablan…</a>
+                                                            </p>
+                                                            <div class="js-card-container"></div>
+                                                        </div>
+                                                        <footer class="tweet-footer cf">
+                                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply"> <i class="icon icon-reply txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                                        <span class="is-vishidden">Reply</span> <span class="reply-triangle"></span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10 ">
+                                                                    <a class="tweet-action " href="#" rel="retweet"> <i class="js-icon-retweet icon icon-retweet icon-retweet-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-retweet-toggle margin-l--3 margin-t--1 txt-size--12 js-retweet-count retweet-count"></span>
+                                                                        <span class="is-vishidden">Retweet</span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-show-tip tweet-action position-rel" href="#" rel="favorite" title="  Like from Atili0   "> <i class="js-icon-favorite icon icon-favorite icon-favorite-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-favorite-toggle margin-l--2 margin-t--1 txt-size--12 js-like-count like-count"></span>
+                                                                        <span class="is-vishidden"> Like </span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item position-rel pull-left margin-r--10">
+                                                                    <a class="tweet-action" href="#" rel="actionsMenu" data-user-id="17191272" data-chirp-id="1158340898360573952" data-account-key="twitter:36910599" data-actions-menu-position="" data-parent-chirp-id=""> <i class="icon icon-more txt-right"></i> <span class="is-vishidden">More options</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="feature-customtimelines tweet-drag-handle tweet-action-item pull-right margin-l--7">
+                                                                    <span class="tweet-action" href="https://twitter.com/eljueves/status/1158340898360573952">
+                                                                        <i
+                                                                            class="icon icon-move txt-right txt-right"></i>
+                                                                        <span class="is-vishidden">Drag to
+                                                                            Collection</span> </span>
+                                                                </li>
+                                                            </ul>
+                                                        </footer>
+                                                        <div class="js-show-this-thread"> </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <article class="stream-item js-stream-item  is-draggable  is-actionable " data-key="1158340881298153472" data-account-key="twitter:36910599" data-drag-type="tweet" data-tweet-id="1158340881298153472" style="">
+                                                <div class="js-stream-item-content item-box js-show-detail ">
+                                                    <div class="js-tweet tweet        ">
+                                                        <header class="tweet-header js-tweet-header flex flex-row flex-align--baseline">
+                                                            <a class="account-link link-complex block flex-auto" href="https://twitter.com/JoelLindstrom" rel="user" target="_blank">
+                                                                <div class="obj-left item-img tweet-img position-rel">
+                                                                    <img class="tweet-avatar avatar pin-top-full-width" src="https://pbs.twimg.com/profile_images/1056301508004888576/j-z6lGF7_normal.jpg" alt="JoelLindstrom's avatar"> </div>
+                                                                <div class="nbfc "> <span class="account-inline txt-ellipsis"> <b
+                                                                            class="fullname link-complex-target">Power
+                                                                            Platform Joel</b> <span
+                                                                            class="username txt-mute">@JoelLindstrom</span>
+                                                                    </span>
+                                                                </div>
+                                                            </a> <time class="tweet-timestamp js-timestamp txt-mute flex-shrink--0" datetime="2019-08-05T11:36:01.000Z" data-time="1565004961000"> <a
+                                                                    class="txt-size-variable--12 no-wrap"
+                                                                    href="https://twitter.com/JoelLindstrom/status/1158340881298153472"
+                                                                    rel="url" target="_blank">now</a> </time> </header>
+                                                        <div class="tweet-body js-tweet-body">
+                                                            <div class="nbfc txt-size-variable--12 txt-ellipsis"> </div>
+                                                            <p class="js-tweet-text tweet-text with-linebreaks " lang="en">Hey look, a tip of the day from <a href="https://twitter.com/BenVollmer/" rel="user" data-user-name="BenVollmer" class="link-complex" target="_blank"><span>@</span><span
+                                                                        class="link-complex-target">BenVollmer</span></a>
+                                                                <a href="https://t.co/qqCJXzd4pR" target="_blank" class="url-ext" data-full-url="https://buff.ly/2KhMjLl" rel="url noopener noreferrer">buff.ly/2KhMjLl</a>
+                                                            </p>
+                                                            <div class="js-card-container"></div>
+                                                            <div class="js-media media-preview   position-rel" data-key="1158340881298153472">
+                                                                <div class=" js-media-preview-container media-preview-container position-rel width-p--100 margin-vm       is-paused  ">
+                                                                    <a class="js-media-image-link block med-link media-item media-size-medium   is-zoomable" href="https://t.co/06m9sgSkSK" rel="mediaPreview" target="_blank" style="background-image:url(https://pbs.twimg.com/media/EBNA5KRWkAAYTCi.jpg?format=jpg&amp;name=360x360)"
+                                                                        data-media-entity-id="1158340879918206976" title=""> </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <footer class="tweet-footer cf">
+                                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply"> <i class="icon icon-reply txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                                        <span class="is-vishidden">Reply</span> <span class="reply-triangle"></span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10 ">
+                                                                    <a class="tweet-action " href="#" rel="retweet"> <i class="js-icon-retweet icon icon-retweet icon-retweet-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-retweet-toggle margin-l--3 margin-t--1 txt-size--12 js-retweet-count retweet-count"></span>
+                                                                        <span class="is-vishidden">Retweet</span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-show-tip tweet-action position-rel" href="#" rel="favorite" title="  Like from Atili0   "> <i class="js-icon-favorite icon icon-favorite icon-favorite-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-favorite-toggle margin-l--2 margin-t--1 txt-size--12 js-like-count like-count"></span>
+                                                                        <span class="is-vishidden"> Like </span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item position-rel pull-left margin-r--10">
+                                                                    <a class="tweet-action" href="#" rel="actionsMenu" data-user-id="16115657" data-chirp-id="1158340881298153472" data-account-key="twitter:36910599" data-actions-menu-position="" data-parent-chirp-id=""> <i class="icon icon-more txt-right"></i> <span class="is-vishidden">More options</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="feature-customtimelines tweet-drag-handle tweet-action-item pull-right margin-l--7">
+                                                                    <span class="tweet-action" href="https://twitter.com/JoelLindstrom/status/1158340881298153472">
+                                                                        <i
+                                                                            class="icon icon-move txt-right txt-right"></i>
+                                                                        <span class="is-vishidden">Drag to
+                                                                            Collection</span> </span>
+                                                                </li>
+                                                            </ul>
+                                                        </footer>
+                                                        <div class="js-show-this-thread"> </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                            <article class="stream-item js-stream-item  is-draggable  is-actionable " data-key="1158340683377381377" data-account-key="twitter:36910599" data-drag-type="tweet" data-tweet-id="1158340683377381377" style="">
+                                                <div class="js-stream-item-content item-box js-show-detail ">
+                                                    <div class="js-tweet tweet        ">
+                                                        <header class="tweet-header js-tweet-header flex flex-row flex-align--baseline">
+                                                            <a class="account-link link-complex block flex-auto" href="https://twitter.com/ElHuffPost" rel="user" target="_blank">
+                                                                <div class="obj-left item-img tweet-img position-rel">
+                                                                    <img class="tweet-avatar avatar pin-top-full-width" src="https://pbs.twimg.com/profile_images/921140803422089217/ETOEUOAx_normal.jpg" alt="ElHuffPost's avatar"> </div>
+                                                                <div class="nbfc "> <span class="account-inline txt-ellipsis"> <b
+                                                                            class="fullname link-complex-target">El
+                                                                            HuffPost</b> <i
+                                                                            class="js-show-tip sprite sprite-verified-mini"
+                                                                            title="Verified account"></i> <span
+                                                                            class="username txt-mute">@ElHuffPost</span>
+                                                                    </span>
+                                                                </div>
+                                                            </a> <time class="tweet-timestamp js-timestamp txt-mute flex-shrink--0" datetime="2019-08-05T11:35:14.000Z" data-time="1565004914000"> <a
+                                                                    class="txt-size-variable--12 no-wrap"
+                                                                    href="https://twitter.com/ElHuffPost/status/1158340683377381377"
+                                                                    rel="url" target="_blank">49s</a> </time> </header>
+                                                        <div class="tweet-body js-tweet-body">
+                                                            <div class="nbfc txt-size-variable--12 txt-ellipsis"> </div>
+                                                            <p class="js-tweet-text tweet-text with-linebreaks " lang="es">"Bajada de impuestos, dejar de despilfarrar en entes, la protección de la familia e incentivar la natalidad...” <a href="https://t.co/BWYHxdYvmC" target="_blank" class="url-ext" data-full-url="https://www.huffingtonpost.es/entry/monasterio-nosotros-no-asumimos-el-programa-de-155-puntos-de-cs-pero-ellos-si-van-a-asumir-el-nuestro_es_5d48129be4b0aca341210446?ydc"
+                                                                    rel="url noopener noreferrer" title="https://www.huffingtonpost.es/entry/monasterio-nosotros-no-asumimos-el-programa-de-155-puntos-de-cs-pero-ellos-si-van-a-asumir-el-nuestro_es_5d48129be4b0aca341210446?ydc">huffingtonpost.es/entry/monaster…</a>
+                                                            </p>
+                                                            <div class="js-card-container"></div>
+                                                        </div>
+                                                        <footer class="tweet-footer cf">
+                                                            <ul class="js-tweet-actions tweet-actions full-width ">
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-reply-action tweet-action position-rel" href="#" rel="reply"> <i class="icon icon-reply txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-reply-toggle margin-l--2 margin-t--1 txt-size--12 js-reply-count reply-count"></span>
+                                                                        <span class="is-vishidden">Reply</span> <span class="reply-triangle"></span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10 ">
+                                                                    <a class="tweet-action " href="#" rel="retweet"> <i class="js-icon-retweet icon icon-retweet icon-retweet-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-retweet-toggle margin-l--3 margin-t--1 txt-size--12 js-retweet-count retweet-count"></span>
+                                                                        <span class="is-vishidden">Retweet</span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item pull-left margin-r--10">
+                                                                    <a class="js-show-tip tweet-action position-rel" href="#" rel="favorite" title="  Like from Atili0   "> <i class="js-icon-favorite icon icon-favorite icon-favorite-toggle txt-center pull-left"></i>
+                                                                        <span class="pull-right icon-favorite-toggle margin-l--2 margin-t--1 txt-size--12 js-like-count like-count"></span>
+                                                                        <span class="is-vishidden"> Like </span> </a>
+                                                                </li>
+                                                                <li class="tweet-action-item position-rel pull-left margin-r--10">
+                                                                    <a class="tweet-action" href="#" rel="actionsMenu" data-user-id="364528766" data-chirp-id="1158340683377381377" data-account-key="twitter:36910599" data-actions-menu-position="" data-parent-chirp-id=""> <i class="icon icon-more txt-right"></i> <span class="is-vishidden">More options</span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="feature-customtimelines tweet-drag-handle tweet-action-item pull-right margin-l--7">
+                                                                    <span class="tweet-action" href="https://twitter.com/ElHuffPost/status/1158340683377381377">
+                                                                        <i
+                                                                            class="icon icon-move txt-right txt-right"></i>
+                                                                        <span class="is-vishidden">Drag to
+                                                                            Collection</span> </span>
+                                                                </li>
+                                                            </ul>
+                                                        </footer>
+                                                        <div class="js-show-this-thread"> </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+
+                                        </div>
+                                    </div>
+                                    <div class="js-column-drag-drop-overlay column-drag-drop-overlay drag-drop-indicator pin-all">
+                                        <div class="l-table column-drag-drop-overlay-inner drag-drop-indicator">
+                                            <div class="l-cell js-drag-drop-overlay-text"> Add here </div>
+                                            <div class="l-cell js-drag-drop-overlay-spinner is-hidden">
+                                                <div class="spinner-small spinner-small-blue-bg spinner-centered-auto">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="js-more-tweets-btn-container more-tweets-btn-container pin-top-full-width more-tweets-btn-container--hidden">
+                                        <div class="js-more-tweets-glow more-tweets-glow obj-center"></div>
+                                        <button class="js-more-tweets-btn Button--primary more-tweets-btn txt-size--12 is-hidden">
+                                            <div class="more-tweets-btn-inner-default"> <i
+                                                    class="icon icon-pointer-u icon-match-context icon-tt"></i> <span
+                                                    class="js-more-tweets-btn-text"></span> </div>
+                                            <div class="more-tweets-btn-inner-mouse-release"> Release to refresh </div>
+                                            <div class="more-tweets-btn-inner-loading">Loading...</div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="js-add-to-customtimeline add-by-url padding-hm is-hidden flex-shrink--0">
+                                </div>
+                            </div>
+                            <div class="js-column-detail column-detail column-panel flex flex-column height-p--100">
+                            </div>
+                            <div class="js-column-social-proof column-detail-level-2 column-panel flex flex-column height-p--100">
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+            <div class="js-send-feedback"></div>
+        </div>
+        <div id="compose-modal" class="js-modal ovl scroll-v scroll-styled-v"><input class="js-media-upload" type="file" accept=".jpg,.jpeg,.gif,.png,.mp4" multiple=""></div>
+        <div id="open-modal" class="js-modal open-modal ovl scroll-v scroll-styled-v"></div>
+        <div id="actions-modal" class="js-modal ovl scroll-v scroll-styled-v"></div>
+        <div id="lists-modal" class="js-modal lists-modal ovl scroll-v scroll-styled-v"></div>
+        <div id="splash-modal" class="js-modal ovl scroll-v scroll-styled-v"></div>
+        <div id="settings-modal" class="js-modal settings-modal ovl scroll-v scroll-styled-v"></div>
+        </div>
+        <div class="js-modals-container"></div>
+
+        <div>
+            <div></div>
+        </div>
+    </body>
+
+</html>
+<div>
+    <div></div>
+</div>
+</body>
+
+</html
